@@ -47,6 +47,11 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // Same as the previous two methods, but instead it searches the database by
+  // category, and then sets the the articles property of the ctx object to the
+  // results of the SQL query.
+  // Execution path: akes ctx and next -> calls findWhere -> selects from database
+  // -> calls categoryData -> next function (articleController.index)
   articlesController.loadByCategory = function(ctx, next) {
     var categoryData = function(articlesInCategory) {
       ctx.articles = articlesInCategory;
