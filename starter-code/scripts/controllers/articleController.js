@@ -28,6 +28,13 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // The function runs when pages receives a request for the /author/:authorName route.
+  // It queries the database with a select for authors where the value equals the
+  // authorName parameter of the ctx object (with a replace for turning + into spaces).
+  // It then calls authorData with the SQL query return, and then sets the ctx.author
+  // property to that value. Finally, has page call the next function (also articlesController.index)
+  // Execution path: akes ctx and next -> calls findWhere -> selects from database
+  // -> calls authorData -> next function (articleController.index)
   articlesController.loadByAuthor = function(ctx, next) {
     var authorData = function(articlesByAuthor) {
       ctx.articles = articlesByAuthor;
