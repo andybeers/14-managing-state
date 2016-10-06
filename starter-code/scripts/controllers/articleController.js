@@ -40,7 +40,6 @@
       ctx.articles = articlesByAuthor;
       next();
     };
-
     Article.findWhere(
       'author', ctx.params.authorName.replace('+', ' '), authorData
     );
@@ -62,6 +61,15 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // When pages gets a request for the home / directory, this method is called.
+  // If the array of articles is populated, it calls articlesController.index to
+  // render the index page, and sets the ctx obj 'articles' property to the array
+  // of all articles. If there aren't any articles in the array, it calls Article.fetchAll
+  // which is an AJAX call to the database. It then calls articleData, which sets the ctx
+  // property, and calls articlesController.index.
+  // Execution path: passed in ctx and next from pages -> checks Articles.all ->
+  // fetchAll -> articleData -> next / articlesController.index
+  // (or short-circuits the fetchAll step)
   articlesController.loadAll = function(ctx, next) {
     var articleData = function(allArticles) {
       ctx.articles = Article.all;
