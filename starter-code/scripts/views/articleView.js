@@ -87,6 +87,11 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  //This method starts by showing all articles, then hiding their siblings (non-article tab content).
+  //Then we remove every article from the DOM.
+  //For each article in the array of articles we pass in as an argument, we pass it to the handlebars render method and then append the results to the articles section of the page.
+  //Once articles are displayed, generate and render filters. Finally we set up teasers on the articles
+  //Execution path: articlesController.index passes articles arg (prop of context obj) -> jQuery to only show articles section -> remove all articles -> forEach articles array -> Handlebars render -> append to DOM -> populateFilters -> handleFilters -> teaser code
   articleView.index = function(articles) {
     $('#articles').show().siblings().hide();
 
