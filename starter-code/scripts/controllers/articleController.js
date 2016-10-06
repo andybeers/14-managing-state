@@ -7,10 +7,17 @@
     articleView.index(ctx.articles);
   };
 
-  // COMMENT: What does this method do?  What is it's execution path? It's in the middleware chain for /articles/:id. It gets
-  //called before articlesController.index. Finds an article by
-  //the params id and sets it to the context object as ctx.articles
-  // This method loads by the id
+  // COMMENT: What does this method do?  What is it's execution path?
+  // It's in the middleware chain for /articles/:id.
+  // When a request comes for the /articles/:id, this method is called.
+  // Article.findWhere is a method to dynamically query the database.
+  // It is passed the field (column) to select for, where the value equals the
+  // second argument passed in: in this case SELECT id WHERE it equals the id param
+  // of the ctx object. findWhere passes article data the results from the SQL query.
+  // articleData then sets that value as a property of the context object, which is
+  // later used by articleController.index
+  // Execution path: takes ctx and next -> calls findWhere -> selects from database
+  // -> calls articleData -> next function (articleController.index)
   articlesController.loadById = function(ctx, next) {
     var articleData = function(article) {
       ctx.articles = article;
